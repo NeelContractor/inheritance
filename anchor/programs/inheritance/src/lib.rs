@@ -17,6 +17,7 @@ pub mod inheritance {
         escrow.beneficiary = beneficiary;
         escrow.deadline = deadline;
         escrow.last_checkin = Clock::get()?.unix_timestamp;
+        escrow.balance = 0;
         escrow.bump = ctx.bumps.escrow;
         escrow.seed = seed;
 
@@ -25,7 +26,7 @@ pub mod inheritance {
 
     pub fn deposit(ctx: Context<Deposit>, amount: u64) -> Result<()> {
         require!(amount > 0, InheritanceError::InvalidAmount);
-
+        
         anchor_lang::solana_program::program::invoke(
             &system_instruction::transfer(
                 &ctx.accounts.owner.key(),
@@ -36,8 +37,12 @@ pub mod inheritance {
                 ctx.accounts.owner.to_account_info(),
                 ctx.accounts.escrow.to_account_info(),
                 ctx.accounts.system_program.to_account_info()
-            ]
-        )?;
+                ]
+            )?;
+            
+        let escrow = &mut ctx.accounts.escrow;
+        escrow.balance = amount;
+        
         Ok(())
     }
 
@@ -146,6 +151,7 @@ pub struct Escrow {
     pub beneficiary: Pubkey,
     pub deadline: i64,
     pub last_checkin: i64,
+    pub balance: u64,
     pub bump: u8,
     #[max_len(16)]
     pub seed: String

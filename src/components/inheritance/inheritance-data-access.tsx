@@ -2,7 +2,7 @@
 
 import { getInheritanceProgram, getInheritanceProgramId } from '@project/anchor'
 import { useConnection } from '@solana/wallet-adapter-react'
-import { Cluster, Keypair, PublicKey, SystemProgram } from '@solana/web3.js'
+import { Cluster, PublicKey, SystemProgram } from '@solana/web3.js'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { useCluster } from '../cluster/cluster-data-access'
@@ -90,123 +90,12 @@ export function useInheritanceProgram() {
     },
   });
 
-  const deposit = useMutation<string, Error, DepositArgs>({
-    mutationKey: ['escrow', 'deposit', { cluster }],
-    mutationFn: async ({ seed, ownerPubkey, amount }) => {
-      const [escrowPDA] = PublicKey.findProgramAddressSync(
-        [Buffer.from("escrow"), ownerPubkey.toBuffer(), Buffer.from(seed)],
-        program.programId
-      );
-
-      return await program.methods
-        .deposit(
-          new BN(amount)
-        )
-        .accountsStrict({ 
-          owner: ownerPubkey,
-          escrow: escrowPDA,
-          systemProgram: SystemProgram.programId
-        })
-        .rpc()
-      },
-    onSuccess: async (signature) => {
-      transactionToast(signature)
-      await accounts.refetch()
-    },
-    onError: () => {
-      toast.error('Failed to deposit')
-    },
-  });
-
-  const checkin = useMutation<string, Error, CheckinArgs>({
-    mutationKey: ['escrow', 'deposit', { cluster }],
-    mutationFn: async ({ seed, ownerPubkey, newDeadline }) => {
-      const [escrowPDA] = PublicKey.findProgramAddressSync(
-        [Buffer.from("escrow"), ownerPubkey.toBuffer(), Buffer.from(seed)],
-        program.programId
-      );
-
-      return await program.methods
-        .checkin(
-          new BN(newDeadline)
-        )
-        .accountsStrict({ 
-          owner: ownerPubkey,
-          escrow: escrowPDA,
-        })
-        .rpc()
-      },
-    onSuccess: async (signature) => {
-      transactionToast(signature)
-      await accounts.refetch()
-    },
-    onError: () => {
-      toast.error('Failed to checkin')
-    },
-  });
-
-  const claim = useMutation<string, Error, ClaimArgs>({
-    mutationKey: ['escrow', 'deposit', { cluster }],
-    mutationFn: async ({ seed, ownerPubkey, beneficiary }) => {
-      const [escrowPDA] = PublicKey.findProgramAddressSync(
-        [Buffer.from("escrow"), ownerPubkey.toBuffer(), Buffer.from(seed)],
-        program.programId
-      );
-
-      return await program.methods
-        .claim()
-        .accountsStrict({ 
-          beneficiary: beneficiary,
-          escrow: escrowPDA,
-          systemProgram: SystemProgram.programId
-        })
-        .rpc()
-      },
-    onSuccess: async (signature) => {
-      transactionToast(signature)
-      await accounts.refetch()
-    },
-    onError: () => {
-      toast.error('Failed to claim')
-    },
-  });
-
-  const cancel = useMutation<string, Error, CancelArgs>({
-    mutationKey: ['escrow', 'cancel', { cluster }],
-    mutationFn: async ({ seed, ownerPubkey }) => {
-      const [escrowPDA] = PublicKey.findProgramAddressSync(
-        [Buffer.from("escrow"), ownerPubkey.toBuffer(), Buffer.from(seed)],
-        program.programId
-      );
-
-      return await program.methods
-        .cancel()
-        .accountsStrict({ 
-          owner: ownerPubkey,
-          escrow: escrowPDA,
-          systemProgram: SystemProgram.programId
-        })
-        .rpc()
-      },
-    onSuccess: async (signature) => {
-      transactionToast(signature)
-      await accounts.refetch()
-    },
-    onError: () => {
-      toast.error('Failed to cancel')
-    },
-  });
-
   return {
     program,
     programId,
     accounts,
     getProgramAccount,
     initialize,
-    deposit,
-    checkin,
-    claim,
-    cancel
   }
 }
 

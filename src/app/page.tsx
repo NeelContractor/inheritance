@@ -1,6 +1,5 @@
-import { DashboardFeature } from '@/components/dashboard/dashboard-feature'
-import Inheritance from '@/components/inheritance/Inheritance'
+import Homepage from '@/components/inheritance/Homepage'
 
 export default function Home() {
-  return <Inheritance />
+  return <Homepage />
 }
