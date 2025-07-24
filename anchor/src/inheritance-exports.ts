@@ -21,7 +21,7 @@ export function getInheritanceProgramId(cluster: Cluster) {
     case 'devnet':
     case 'testnet':
       // This is the program ID for the Counter program on devnet and testnet.
-      return new PublicKey('3kXvWrPQbBhakjWEGwWTiyXBf6yebzWXVTDAqqicJG2L')
+      return new PublicKey('FeGUTmu8ZmFxLTQuD7VteW8i3hmLzckEgSss46jp4oyK')
     case 'mainnet-beta':
     default:
       return INHERITANCE_PROGRAM_ID

@@ -4,7 +4,7 @@
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program::system_instruction;
 
-declare_id!("3kXvWrPQbBhakjWEGwWTiyXBf6yebzWXVTDAqqicJG2L");
+declare_id!("FeGUTmu8ZmFxLTQuD7VteW8i3hmLzckEgSss46jp4oyK");
 
 #[program]
 pub mod inheritance {

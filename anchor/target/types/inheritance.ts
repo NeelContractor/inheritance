@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/inheritance.json`.
  */
 export type Inheritance = {
-  "address": "3kXvWrPQbBhakjWEGwWTiyXBf6yebzWXVTDAqqicJG2L",
+  "address": "FeGUTmu8ZmFxLTQuD7VteW8i3hmLzckEgSss46jp4oyK",
   "metadata": {
     "name": "inheritance",
     "version": "0.1.0",

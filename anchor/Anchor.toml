@@ -6,7 +6,7 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-inheritance = "3kXvWrPQbBhakjWEGwWTiyXBf6yebzWXVTDAqqicJG2L"
+inheritance = "FeGUTmu8ZmFxLTQuD7VteW8i3hmLzckEgSss46jp4oyK"
 
 [registry]
 url = "https://api.apr.dev"
